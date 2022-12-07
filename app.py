@@ -69,6 +69,8 @@ title = "REAPR Web - Tagged LiveStream Events"
 headings = ("ID", "Tag", "Date/Time", "User", "Message")
 
 app = Flask(__name__, template_folder="template")
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+
 @app.route('/')    
 def index(): 
     data = get_data()
