@@ -3,10 +3,20 @@
 <title>{{ title }}</title>
 </head>
 <body>
-<ul>
-{% for row in data: %}
-<li>{{ row }}</li>
+<table border="1" cellpadding="1" cellspacing="1">
+    <center><h1>REAPR-web : Reporting Events, Anomalous Phenomena et Requests - Web</h1></center>
+    <tr>
+{% for heading in headings %}
+        <td>{{ heading }}</td>
 {% endfor %}
-</ul>
+    </tr>
+{% for row in data %}
+    <tr>
+    {% for d in row %}
+        <td>{{ d }}</td>
+    {% endfor %}
+    </tr>
+{% endfor %}
+</table>
 </body>
 </html>

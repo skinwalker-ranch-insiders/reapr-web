@@ -1,7 +1,6 @@
 from flask import render_template, Flask
 import mysql.connector
 from settings import db_server, db_user, db_passwd, db_name
-#import pyodbc
 
 def get_data():
     ###### SQL CONNECTION ######
@@ -13,7 +12,6 @@ def get_data():
 
     cursor = connection.cursor()    
     query = ("SELECT * FROM yt_events ORDER BY id DESC")
-    #cursor.execute("SELECT * FROM yt_events")
     cursor.execute(query)
     data = cursor.fetchall()
     connection.close()
@@ -21,8 +19,7 @@ def get_data():
 
 ###### FLASK SERVER ######
 title = "REAPR Web - Tagged LiveStream Events"
-headings = ("ID", "TAG", "DATETIME", "USER", "MESSAGE")
-id = 80809915
+headings = ("ID", "Tag", "Date/Time", "User", "Message")
 
 app = Flask(__name__, template_folder="template")
 @app.route('/')    
