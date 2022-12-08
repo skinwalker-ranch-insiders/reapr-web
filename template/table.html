@@ -2,10 +2,18 @@
 <head>
 <title>{{ title }}</title>
 </head>
+<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</script>
 <body>
 <table border="1" cellpadding="1" cellspacing="1">
     <center><h1>REAPR-web : Reporting Events, Anomalous Phenomena et Requests - Web</h1></center>
     <h5 align="left"><a href="{{ url_for('index') }}">List All</a> | <a href="{{ url_for('events') }}">List Events</a> | <a href="{{ url_for('thoughts') }}">List Thoughts</a> | <a href="{{ url_for('requests') }}">List Requests</a> | <a href="{{ url_for('export') }}">Export as CSV</a></h5>
+    <h5 align="right"><b>Search the table for events:
+        <input id="rws" type="text" 
+        placeholder="Search here">
+    </b></h5>
+    <tbody id="revents">
     <tr>
 {% for heading in headings %}
         <td>{{ heading }}</td>
@@ -19,5 +27,16 @@
     </tr>
 {% endfor %}
 </table>
+<script>
+    $(document).ready(function() {
+        $("#rws").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#revents tr").filter(function() {
+                $(this).toggle($(this).text()
+                .toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 </body>
 </html>
