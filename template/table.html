@@ -1,16 +1,20 @@
 <html>
 <head>
 <title>{{ title }}</title>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
 </head>
 <body>
-<table border="1" cellpadding="1" cellspacing="1">
     <center><h1>REAPR-web : Reporting Events, Anomalous Phenomena et Requests - Web</h1></center>
-    <h5 align="left"><a href="{{ url_for('index') }}">List All</a> | <a href="{{ url_for('events') }}">List Events</a> | <a href="{{ url_for('thoughts') }}">List Thoughts</a> | <a href="{{ url_for('requests') }}">List Requests</a> | <a href="{{ url_for('export') }}">Export as CSV</a></h5>
+    <h5 align="left"><a href="{{ url_for('index') }}">List All</a> | <a href="{{ url_for('events') }}">List Events</a> | <a href="{{ url_for('thoughts') }}">List Thoughts</a> | <a href="{{ url_for('requests') }}">List Requests</a> | <a href="{{ url_for('export') }}">Export Entire DB as CSV</a></h5>
+<table border="1" cellpadding="1" cellspacing="1" id="revents">
+<thead>
     <tr>
 {% for heading in headings %}
         <td>{{ heading }}</td>
 {% endfor %}
     </tr>
+</thead>
+<tbody>
 {% for row in data %}
     <tr>
     {% for d in row %}
@@ -18,6 +22,17 @@
     {% endfor %}
     </tr>
 {% endfor %}
+</tbody>
 </table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready(function () {
+    $("#revents").DataTable({
+        order: [[0, 'desc']],
+        "iDisplayLength": 100
+    });
+});
+</script>
 </body>
 </html>
