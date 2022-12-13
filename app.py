@@ -64,9 +64,24 @@ def get_requests():
     connection.close()
     return data
 
+def get_feedback():
+    ###### SQL CONNECTION ######
+    connection = mysql.connector.connect(
+                                host=db_server,
+                                database=db_name,
+                                user=db_user,
+                                password=db_passwd)
+
+    cursor = connection.cursor()
+    query = ("SELECT * FROM yt_events WHERE YT_Tag = 'FEEDBACK' ORDER BY id DESC")
+    cursor.execute(query)
+    data = cursor.fetchall()
+    connection.close()
+    return data
+
 ###### FLASK SERVER ######
 title = "REAPR Web - Tagged LiveStream Events"
-headings = ("ID", "Tag", "Date/Time", "User", "Message")
+headings = ("ID", "Tag", "Date/Time", "User", "Message", "In SS")
 
 app = Flask(__name__, template_folder="template")
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -103,6 +118,14 @@ def requests():
     if (__name__ == '__main__'):
         app.run(debug=False)
 
+@app.route('/feedback/')
+def feedback():
+    data = get_feedback()
+    return render_template("table.html", headings=headings, data=data, title=title)
+
+    if (__name__ == '__main__'):
+        app.run(debug=False)
+
 @app.route('/export/', methods=['GET'])
 def export():
     si = StringIO()
@@ -114,3 +137,6 @@ def export():
     response.headers['Content-Disposition'] = 'attachment; filename=REAPR-report.csv'
     response.headers["Content-type"] = "text/csv"
     return response
+
+    if (__name__ == '__main__'):
+        app.run(debug=False)

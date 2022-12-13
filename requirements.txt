@@ -1,3 +1,5 @@
 flask
 pyodbc
 mysql-connector-python
+pandas
+pymysql

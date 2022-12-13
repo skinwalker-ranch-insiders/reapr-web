@@ -3,9 +3,13 @@
 <title>{{ title }}</title>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
 </head>
+<style>
+.reapr-nomatch { background-color: yellow; }
+.reapr-match { background-color: green; }
+</style>
 <body>
     <center><h1>REAPR-web : Reporting Events, Anomalous Phenomena et Requests - Web</h1></center>
-    <h5 align="left"><a href="{{ url_for('index') }}">List All</a> | <a href="{{ url_for('events') }}">List Events</a> | <a href="{{ url_for('thoughts') }}">List Thoughts</a> | <a href="{{ url_for('requests') }}">List Requests</a> | <a href="{{ url_for('export') }}">Export Entire DB as CSV</a></h5>
+    <h5 align="left"><a href="{{ url_for('index') }}">List All</a> | <a href="{{ url_for('events') }}">List Events</a> | <a href="{{ url_for('thoughts') }}">List Thoughts</a> | <a href="{{ url_for('requests') }}">List Requests</a> | <a href="{{ url_for('feedback') }}">List Feedback</a> | <a href="{{ url_for('export') }}">Export Entire DB as CSV</a></h5>
 <table border="1" cellpadding="1" cellspacing="1" id="revents">
 <thead>
     <tr>
@@ -18,7 +22,13 @@
 {% for row in data %}
     <tr>
     {% for d in row %}
-        <td>{{ d }}</td>
+        {% if d == None %}
+	    <td class="reapr-nomatch">{{ d }}</td>
+        {% elif d == 'Y' %}
+	    <td class="reapr-match">{{ d }}</td>
+	{% else %}
+            <td>{{ d }}</td>
+	{% endif %}
     {% endfor %}
     </tr>
 {% endfor %}
