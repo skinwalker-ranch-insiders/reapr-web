@@ -12,11 +12,11 @@
 #               @Kris - We Have Fun : Insiders Discord - Consultant
 #               @johns67467 : Insider Discord - Database Code Contribution
 #               @John Neiberger : Insider Discord - Code Review
-from flask import render_template, Flask
 import csv
-from io import StringIO
 import mysql.connector
 from settings import db_server, db_user, db_passwd, db_name
+from flask import render_template, Flask
+from io import StringIO
 
 def get_data():
     ###### SQL CONNECTION ######
