@@ -1,3 +1,16 @@
+# REAPR-web is a web front end providing access to reapr_db
+# and the data collected with REAPR from the Skinwalker Ranch
+# Insiders program.
+#
+# The intent is be able to log observations quickly from YT 
+# Chat and save them in a database for later review. To 
+# support reading, sorting, filtering and exporting this data
+# REAPR-web was developed.
+#
+# Authored by: Robert Kris Davies <robert.kris.davies@hackshack.sh>
+# Supported by: Skinwalker Ranch Insiders - Testing and Feedback
+#               @Kris - We Have Fun : Insiders Discord - Consultant
+#               @johns67467 : Insider Discord - Database Code Contribution
 from flask import render_template, Flask
 import csv
 from io import StringIO
@@ -41,7 +54,6 @@ def get_thoughts():
                                 database=db_name,
                                 user=db_user,
                                 password=db_passwd)
-
     cursor = connection.cursor()
     query = ("SELECT * FROM yt_events WHERE YT_Tag = 'THOUGHT' ORDER BY id DESC")
     cursor.execute(query)
@@ -56,7 +68,6 @@ def get_requests():
                                 database=db_name,
                                 user=db_user,
                                 password=db_passwd)
-
     cursor = connection.cursor()
     query = ("SELECT * FROM yt_events WHERE YT_Tag = 'REQUEST' ORDER BY id DESC")
     cursor.execute(query)
@@ -71,7 +82,6 @@ def get_feedback():
                                 database=db_name,
                                 user=db_user,
                                 password=db_passwd)
-
     cursor = connection.cursor()
     query = ("SELECT * FROM yt_events WHERE YT_Tag = 'FEEDBACK' ORDER BY id DESC")
     cursor.execute(query)
@@ -89,40 +99,50 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 @app.route('/')    
 def index(): 
     data = get_data()
-    return render_template("table.html", headings=headings, data=data, title=title)
-
+    return render_template("table.html", 
+                            headings=headings, 
+                            data=data, 
+                            title=title)
     if (__name__ == '__main__'):
         app.run(debug=False)
 
 @app.route('/events/')
 def events():
     data = get_events()
-    return render_template("table.html", headings=headings, data=data, title=title)
-
+    return render_template("table.html", 
+                            headings=headings, 
+                            data=data, 
+                            title=title)
     if (__name__ == '__main__'):
         app.run(debug=False)
 
 @app.route('/thoughts/')
 def thoughts():
     data = get_thoughts()
-    return render_template("table.html", headings=headings, data=data, title=title)
-
+    return render_template("table.html", 
+                            headings=headings, 
+                            data=data, 
+                            title=title)
     if (__name__ == '__main__'):
         app.run(debug=False)
 
 @app.route('/requests/')
 def requests():
     data = get_requests()
-    return render_template("table.html", headings=headings, data=data, title=title)
-
+    return render_template("table.html", 
+                            headings=headings, 
+                            data=data, 
+                            title=title)
     if (__name__ == '__main__'):
         app.run(debug=False)
 
 @app.route('/feedback/')
 def feedback():
     data = get_feedback()
-    return render_template("table.html", headings=headings, data=data, title=title)
-
+    return render_template("table.html", 
+                            headings=headings, 
+                            data=data, 
+                            title=title)
     if (__name__ == '__main__'):
         app.run(debug=False)
 
@@ -137,6 +157,5 @@ def export():
     response.headers['Content-Disposition'] = 'attachment; filename=REAPR-report.csv'
     response.headers["Content-type"] = "text/csv"
     return response
-
     if (__name__ == '__main__'):
         app.run(debug=False)
